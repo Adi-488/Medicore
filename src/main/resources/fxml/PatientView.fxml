@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.hospital_management.controller.PatientController"
+      styleClass="page-container" spacing="18">
+
+    <!-- Header Row -->
+    <HBox alignment="CENTER_LEFT" spacing="14">
+        <VBox HBox.hgrow="ALWAYS" spacing="2">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Patients" styleClass="page-title"/>
+                <Label fx:id="lblPatientCount" text="" styleClass="page-count-badge"/>
+            </HBox>
+            <Label text="Manage and track all patient records" styleClass="page-subtitle"/>
+        </VBox>
+        <Button text="＋ Add Patient" styleClass="btn-primary" onAction="#onAddPatient"/>
+    </HBox>
+
+    <!-- Toolbar: Search + Filters -->
+    <HBox styleClass="toolbar-row" spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="searchField" promptText="🔍  Search patients by name..."
+                   styleClass="search-field" HBox.hgrow="SOMETIMES"/>
+
+        <Region HBox.hgrow="ALWAYS"/>
+
+        <Button fx:id="filterAll" text="All" styleClass="filter-button, filter-button-active"
+                onAction="#onFilterAll"/>
+        <Button fx:id="filterInpatient" text="Inpatient" styleClass="filter-button"
+                onAction="#onFilterInpatient"/>
+        <Button fx:id="filterOutpatient" text="Outpatient" styleClass="filter-button"
+                onAction="#onFilterOutpatient"/>
+        <Button fx:id="filterAdmitted" text="Admitted" styleClass="filter-button"
+                onAction="#onFilterAdmitted"/>
+        <Button fx:id="filterDischarged" text="Discharged" styleClass="filter-button"
+                onAction="#onFilterDischarged"/>
+    </HBox>
+
+    <!-- Patient Table -->
+    <VBox styleClass="section-card" VBox.vgrow="ALWAYS" spacing="0">
+        <TableView fx:id="patientTable" VBox.vgrow="ALWAYS">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
+            <columns>
+                <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                <TableColumn fx:id="colName" text="Name" prefWidth="150"/>
+                <TableColumn fx:id="colAge" text="Age" prefWidth="60"/>
+                <TableColumn fx:id="colGender" text="Gender" prefWidth="80"/>
+                <TableColumn fx:id="colPhone" text="Phone" prefWidth="120"/>
+                <TableColumn fx:id="colType" text="Type" prefWidth="100"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="100"/>
+                <TableColumn fx:id="colDiagnosis" text="Diagnosis" prefWidth="180"/>
+                <TableColumn fx:id="colBed" text="Bed #" prefWidth="60"/>
+                <TableColumn fx:id="colActions" text="Actions" prefWidth="140"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</VBox>

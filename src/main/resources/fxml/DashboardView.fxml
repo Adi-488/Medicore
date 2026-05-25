@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.hospital_management.controller.DashboardController"
+            fitToWidth="true" fitToHeight="true"
+            hbarPolicy="NEVER" vbarPolicy="AS_NEEDED"
+            styleClass="scroll-pane">
+
+    <VBox styleClass="page-container" spacing="22">
+
+        <!-- ═══ Welcome Banner ═══ -->
+        <HBox styleClass="welcome-banner" alignment="CENTER_LEFT" spacing="0">
+            <VBox HBox.hgrow="ALWAYS" spacing="4">
+                <Label fx:id="lblWelcome" text="Good Morning, Dr. Admin 👋" styleClass="welcome-title"/>
+                <Label fx:id="lblWelcomeDate" text="Friday, 23 May 2026" styleClass="welcome-subtitle"/>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" spacing="2">
+                <Label fx:id="lblClock" text="15:00" styleClass="welcome-time"/>
+                <Label text="Live Clock" styleClass="welcome-date"/>
+            </VBox>
+        </HBox>
+
+        <!-- ═══ Stat Cards Row ═══ -->
+        <HBox spacing="16" fx:id="statsRow">
+            <!-- Total Patients -->
+            <VBox styleClass="stat-card, stat-card-accent-blue" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="14">
+                    <StackPane styleClass="icon-circle, icon-circle-blue">
+                        <Label text="👥" styleClass="icon-text"/>
+                    </StackPane>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Total Patients" styleClass="stat-card-label"/>
+                        <Label fx:id="lblTotalPatients" text="0" styleClass="stat-card-value, stat-card-value-blue"/>
+                        <Label fx:id="lblPatientDetail" text="0 inpatient · 0 outpatient" styleClass="stat-card-detail" wrapText="true"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Appointments -->
+            <VBox styleClass="stat-card, stat-card-accent-green" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="14">
+                    <StackPane styleClass="icon-circle, icon-circle-green">
+                        <Label text="📅" styleClass="icon-text"/>
+                    </StackPane>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Appointments" styleClass="stat-card-label"/>
+                        <Label fx:id="lblTotalAppointments" text="0" styleClass="stat-card-value, stat-card-value-green"/>
+                        <Label fx:id="lblAppointmentDetail" text="0 scheduled · 0 completed" styleClass="stat-card-detail" wrapText="true"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Pending Bills -->
+            <VBox styleClass="stat-card, stat-card-accent-orange" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="14">
+                    <StackPane styleClass="icon-circle, icon-circle-orange">
+                        <Label text="⏳" styleClass="icon-text"/>
+                    </StackPane>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Pending Bills" styleClass="stat-card-label"/>
+                        <Label fx:id="lblPendingBills" text="0" styleClass="stat-card-value, stat-card-value-orange"/>
+                        <Label fx:id="lblPendingAmount" text="₹0" styleClass="stat-card-detail" wrapText="true"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Revenue -->
+            <VBox styleClass="stat-card, stat-card-accent-purple" HBox.hgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT" spacing="14">
+                    <StackPane styleClass="icon-circle, icon-circle-purple">
+                        <Label text="💰" styleClass="icon-text"/>
+                    </StackPane>
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label text="Total Revenue" styleClass="stat-card-label"/>
+                        <Label fx:id="lblRevenue" text="₹0" styleClass="stat-card-value, stat-card-value-purple"/>
+                        <Label fx:id="lblRevenueDetail" text="₹0 collected" styleClass="stat-card-detail" wrapText="true"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </HBox>
+
+        <!-- ═══ Quick Actions ═══ -->
+        <HBox spacing="14">
+            <VBox styleClass="quick-action-card" HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER" fx:id="qaNewPatient">
+                <Label text="👤" styleClass="quick-action-icon"/>
+                <Label text="New Patient" styleClass="quick-action-title"/>
+                <Label text="Register a patient" styleClass="quick-action-desc"/>
+            </VBox>
+            <VBox styleClass="quick-action-card" HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER" fx:id="qaNewAppointment">
+                <Label text="📋" styleClass="quick-action-icon"/>
+                <Label text="Schedule" styleClass="quick-action-title"/>
+                <Label text="Book appointment" styleClass="quick-action-desc"/>
+            </VBox>
+            <VBox styleClass="quick-action-card" HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER" fx:id="qaNewBill">
+                <Label text="🧾" styleClass="quick-action-icon"/>
+                <Label text="New Bill" styleClass="quick-action-title"/>
+                <Label text="Generate invoice" styleClass="quick-action-desc"/>
+            </VBox>
+            <VBox styleClass="quick-action-card" HBox.hgrow="ALWAYS" spacing="6" alignment="CENTER" fx:id="qaViewReports">
+                <Label text="📊" styleClass="quick-action-icon"/>
+                <Label text="API Docs" styleClass="quick-action-title"/>
+                <Label text="Swagger UI" styleClass="quick-action-desc"/>
+            </VBox>
+        </HBox>
+
+        <!-- ═══ Tables Row ═══ -->
+        <HBox spacing="16" VBox.vgrow="ALWAYS">
+
+            <!-- Recent Patients -->
+            <VBox styleClass="section-card" HBox.hgrow="ALWAYS" spacing="0">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="Recent Patients" styleClass="section-title"/>
+                    <Label fx:id="lblRecentCount" text="" styleClass="section-count"/>
+                </HBox>
+                <TableView fx:id="recentPatientsTable" VBox.vgrow="ALWAYS" prefHeight="260">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="rpNameCol" text="Name" prefWidth="180"/>
+                        <TableColumn fx:id="rpTypeCol" text="Type" prefWidth="80"/>
+                        <TableColumn fx:id="rpStatusCol" text="Status" prefWidth="95"/>
+                        <TableColumn fx:id="rpDiagnosisCol" text="Diagnosis" prefWidth="150"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Upcoming Appointments -->
+            <VBox styleClass="section-card" HBox.hgrow="ALWAYS" spacing="0">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="Upcoming Appointments" styleClass="section-title"/>
+                    <Label fx:id="lblUpcomingCount" text="" styleClass="section-count"/>
+                </HBox>
+                <TableView fx:id="upcomingAppointmentsTable" VBox.vgrow="ALWAYS" prefHeight="260">
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                    </columnResizePolicy>
+                    <columns>
+                        <TableColumn fx:id="uaPatientCol" text="Patient" prefWidth="150"/>
+                        <TableColumn fx:id="uaDoctorCol" text="Doctor" prefWidth="145"/>
+                        <TableColumn fx:id="uaDateCol" text="Date" prefWidth="105"/>
+                        <TableColumn fx:id="uaTimeCol" text="Time" prefWidth="65"/>
+                        <TableColumn fx:id="uaStatusCol" text="Status" prefWidth="110"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+        </HBox>
+
+    </VBox>
+
+</ScrollPane>

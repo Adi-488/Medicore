@@ -1,0 +1,41 @@
+# ─────────────────────────────────────────────────────────
+# .dockerignore — MediCore HMS
+# Exclude unnecessary files from Docker build context
+# ─────────────────────────────────────────────────────────
+
+# Build archives (excluding our target production JAR)
+target/*
+!target/Hospital_Management-0.0.1-SNAPSHOT.jar
+*.jar
+
+# IDE and editor files
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# Git
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Local scripts (not needed in container)
+start-server.bat
+run-client.bat
+
+# Maven wrapper (not needed, Maven is in build image)
+.mvn/
+mvnw
+mvnw.cmd
+
+# Frontend (deployed separately to Firebase)
+frontend/
+
+# Logs and temp files
+*.log
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db

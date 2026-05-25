@@ -1,0 +1,22 @@
+# ─────────────────────────────────────────────────────────
+# .gcloudignore — MediCore HMS
+# Allow uploading target/Hospital_Management-0.0.1-SNAPSHOT.jar
+# ─────────────────────────────────────────────────────────
+
+# Exclude Git files
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Exclude local source folders (built locally, not needed in Cloud Run packaging)
+src/
+frontend/
+.mvn/
+mvnw
+mvnw.cmd
+pom.xml
+
+# Exclude target/ subfolders, EXCEPT the fat-JAR we want to deploy
+target/*
+!target/Hospital_Management-0.0.1-SNAPSHOT.jar

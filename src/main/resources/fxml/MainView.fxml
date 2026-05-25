@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.hospital_management.controller.MainController"
+            stylesheets="@styles.css"
+            prefWidth="1280" prefHeight="800">
+
+    <!-- ═══ SIDEBAR (Dark Contrast) ═══ -->
+    <left>
+        <VBox fx:id="sidebar" styleClass="sidebar" prefWidth="250" spacing="0">
+
+            <!-- Brand -->
+            <VBox styleClass="sidebar-brand">
+                <HBox alignment="CENTER_LEFT" spacing="8">
+                    <Label text="⚕" styleClass="sidebar-brand-icon"/>
+                    <Label text="MediCore" styleClass="sidebar-brand-title"/>
+                </HBox>
+                <Label text="Hospital Management System" styleClass="sidebar-brand-subtitle"/>
+            </VBox>
+
+            <Separator/>
+
+            <!-- Profile -->
+            <HBox styleClass="sidebar-profile" alignment="CENTER_LEFT" spacing="12">
+                <StackPane styleClass="sidebar-profile-circle">
+                    <Label text="A" styleClass="sidebar-profile-initial"/>
+                </StackPane>
+                <VBox spacing="1">
+                    <Label text="Dr. Admin" styleClass="sidebar-profile-name"/>
+                    <Label text="Administrator" styleClass="sidebar-profile-role"/>
+                </VBox>
+            </HBox>
+
+            <!-- Navigation Section -->
+            <Label text="NAVIGATION" styleClass="sidebar-section-label"/>
+            <VBox styleClass="sidebar-nav" VBox.vgrow="ALWAYS">
+                <Button fx:id="navDashboard" text="  📊  Dashboard" styleClass="nav-button, nav-button-active"
+                        onAction="#onNavDashboard" maxWidth="Infinity"/>
+                <Button fx:id="navPatients" text="  👥  Patients" styleClass="nav-button"
+                        onAction="#onNavPatients" maxWidth="Infinity"/>
+                <Button fx:id="navAppointments" text="  📅  Appointments" styleClass="nav-button"
+                        onAction="#onNavAppointments" maxWidth="Infinity"/>
+                <Button fx:id="navBills" text="  💳  Billing" styleClass="nav-button"
+                        onAction="#onNavBills" maxWidth="Infinity"/>
+            </VBox>
+
+            <!-- Footer -->
+            <VBox styleClass="sidebar-footer" spacing="6">
+                <HBox spacing="8" alignment="CENTER_LEFT">
+                    <Label fx:id="statusBadge" text="● API Online" styleClass="status-badge, status-badge-online"/>
+                </HBox>
+                <Label text="MediCore HMS v2.0  ·  © 2026" styleClass="sidebar-footer-text"/>
+            </VBox>
+
+        </VBox>
+    </left>
+
+    <!-- ═══ CONTENT AREA ═══ -->
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+
+</BorderPane>
