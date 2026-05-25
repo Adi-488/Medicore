@@ -3,6 +3,7 @@ import axios from 'axios';
 // During development, Vite proxy maps /api to http://localhost:8080.
 // In production, we default to the live deployed Google Cloud Run API URL.
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://medicore-api-573092816496.asia-south1.run.app/api';
+const AUTH_API_BASE_URL = import.meta.env.VITE_AUTH_API_URL || 'https://auth-service-573092816496.asia-south1.run.app/api/auth';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,6 +11,30 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// Interceptor to inject JWT token automatically for secure monolith API calls
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+const authApi = axios.create({
+  baseURL: AUTH_API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+export const AuthService = {
+  login: (username, password) => authApi.post('/login', { username, password }),
+  register: (username, password, email, role) => authApi.post('/register', { username, password, email, role }),
+  validate: (token) => authApi.get('/validate', { params: { token } }),
+};
 
 export const DashboardService = {
   getStats: () => api.get('/dashboard/stats'),
