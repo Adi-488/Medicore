@@ -1,0 +1,17 @@
+# ─────────────────────────────────────────────────────────
+# .gcloudignore — MediCore HMS Auth Service
+# Allow uploading target/auth-service-0.0.1-SNAPSHOT.jar
+# ─────────────────────────────────────────────────────────
+
+# Exclude Git files
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Exclude local source folders (not needed since we upload the pre-built fat-JAR)
+src/
+
+# Exclude target/ subfolders, EXCEPT the fat-JAR we want to deploy
+target/*
+!target/auth-service-0.0.1-SNAPSHOT.jar

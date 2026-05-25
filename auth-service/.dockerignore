@@ -1,0 +1,6 @@
+# Exclude everything by default
+*
+
+# Allow the specific pre-built jar and Dockerfile
+!target/auth-service-0.0.1-SNAPSHOT.jar
+!Dockerfile
