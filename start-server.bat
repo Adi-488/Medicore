@@ -1,7 +1,7 @@
 @echo off
-title MediCore HMS — Standalone API Server
+title CurePulse HMS — Standalone API Server
 echo ====================================================================
-echo                   MediCore HMS Standalone API Server
+echo                   CurePulse HMS Standalone API Server
 echo ====================================================================
 echo.
 echo Starting the Spring Boot backend server...

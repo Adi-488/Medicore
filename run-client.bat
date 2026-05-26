@@ -1,7 +1,7 @@
 @echo off
-title MediCore HMS — Desktop Client
+title CurePulse HMS — Desktop Client
 echo ====================================================================
-echo                     MediCore HMS Desktop Client
+echo                     CurePulse HMS Desktop Client
 echo ====================================================================
 echo.
 echo Launching the JavaFX desktop application...

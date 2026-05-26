@@ -1,7 +1,7 @@
 {
-  "name": "medicore-web",
+  "name": "curepulse-web",
   "version": "1.0.0",
-  "description": "MediCore HMS — Web Dashboard",
+  "description": "CurePulse HMS — Web Dashboard",
   "private": true,
   "scripts": {
     "dev": "vite --port 3000",

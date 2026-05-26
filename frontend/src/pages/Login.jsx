@@ -84,7 +84,7 @@ export default function Login({ onLoginSuccess }) {
           </div>
         </div>
 
-        <h1 className="login-logo">MediCore HMS</h1>
+        <h1 className="login-logo">CurePulse HMS</h1>
         <p className="login-subtitle">
           {isSignUp ? 'Register New Staff Account' : 'Hospital Management System Portals'}
         </p>

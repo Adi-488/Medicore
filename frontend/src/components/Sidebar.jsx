@@ -22,7 +22,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       <div className="sidebar-logo">
         <span style={{ fontSize: '1.5rem' }}>🏥</span>
-        <span>MediCore HMS</span>
+        <span>CurePulse HMS</span>
       </div>
 
       <nav style={{ flex: 1 }}>

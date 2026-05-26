@@ -22,7 +22,7 @@ public class AuthServiceApplication {
                 User admin = User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("Aditya@2005"))
-                        .email("admin@medicore.com")
+                        .email("admin@curepulse.com")
                         .role("ROLE_ADMIN")
                         .build();
                 userRepository.save(admin);

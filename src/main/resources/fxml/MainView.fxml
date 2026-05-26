@@ -18,7 +18,7 @@
             <VBox styleClass="sidebar-brand">
                 <HBox alignment="CENTER_LEFT" spacing="8">
                     <Label text="⚕" styleClass="sidebar-brand-icon"/>
-                    <Label text="MediCore" styleClass="sidebar-brand-title"/>
+                    <Label text="CurePulse" styleClass="sidebar-brand-title"/>
                 </HBox>
                 <Label text="Hospital Management System" styleClass="sidebar-brand-subtitle"/>
             </VBox>
@@ -54,7 +54,7 @@
                 <HBox spacing="8" alignment="CENTER_LEFT">
                     <Label fx:id="statusBadge" text="● API Online" styleClass="status-badge, status-badge-online"/>
                 </HBox>
-                <Label text="MediCore HMS v2.0  ·  © 2026" styleClass="sidebar-footer-text"/>
+                <Label text="CurePulse HMS v2.0  ·  © 2026" styleClass="sidebar-footer-text"/>
             </VBox>
 
         </VBox>
