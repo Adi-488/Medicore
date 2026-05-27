@@ -1,17 +1,25 @@
 # ─────────────────────────────────────────────────────────
 # CurePulse HMS — Dockerfile (Backend API Server)
 # Runs the Spring Boot REST API in headless (no JavaFX) mode
-# Optimized for pre-compiled local builds
 # ─────────────────────────────────────────────────────────
 
+# Stage 1: Build stage
+FROM maven:3.8.5-openjdk-17-slim AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+# Build the headless jar using the server profile
+RUN mvn clean package -P server -DskipTests
+
+# Stage 2: Runtime stage
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
 # Add a non-root user for security
 RUN addgroup -S curepulse && adduser -S curepulse -G curepulse
 
-# Copy the pre-built local fat-JAR
-COPY target/Hospital_Management-0.0.1-SNAPSHOT.jar app.jar
+# Copy the built fat-JAR from the build stage
+COPY --from=build /app/target/Hospital_Management-0.0.1-SNAPSHOT.jar app.jar
 
 # Set ownership
 RUN chown curepulse:curepulse app.jar

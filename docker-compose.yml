@@ -1,0 +1,121 @@
+services:
+  # 1. MySQL Service (Shared DB Engine)
+  mysql-db:
+    image: mysql:8.0
+    container_name: curepulse-db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Aditya@2005
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - curepulse-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pAditya@2005"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 2. Netflix Eureka Server (Service Registry)
+  discovery-server:
+    build:
+      context: ./discovery-server
+    container_name: curepulse-discovery-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SERVER_PORT=8761
+    networks:
+      - curepulse-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8761/eureka/apps"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 3. Authentication Service
+  auth-service:
+    build:
+      context: ./auth-service
+    container_name: curepulse-auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/authdb?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Aditya@2005
+      - EUREKA_CLIENT_ENABLED=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+    networks:
+      - curepulse-network
+
+  # 4. Patient Microservice
+  patient-service:
+    build:
+      context: ./patient-service
+    container_name: curepulse-patient-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/patient_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Aditya@2005
+      - EUREKA_CLIENT_ENABLED=true
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka
+      - EUREKA_INSTANCE_PREFER_IP_ADDRESS=true
+    networks:
+      - curepulse-network
+
+  # 5. Core Backend API Monolith
+  backend-api:
+    build:
+      context: ./
+    container_name: curepulse-backend-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/hospitaldb?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Aditya@2005
+    networks:
+      - curepulse-network
+
+  # 6. React Web Frontend
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://localhost:8080/api
+        - VITE_AUTH_API_URL=http://localhost:8081/api/auth
+    container_name: curepulse-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend-api
+      - auth-service
+      - patient-service
+    networks:
+      - curepulse-network
+
+networks:
+  curepulse-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

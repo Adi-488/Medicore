@@ -1,6 +1,6 @@
 # ─────────────────────────────────────────────────────────
-# CurePulse HMS — Dockerfile (Patient Microservice)
-# Runs the Spring Boot REST API in headless mode
+# CurePulse HMS — Dockerfile (Discovery Registry Server)
+# Runs the Netflix Eureka Discovery Registry Server
 # ─────────────────────────────────────────────────────────
 
 # Stage 1: Build stage
@@ -18,16 +18,16 @@ WORKDIR /app
 RUN addgroup -S curepulse && adduser -S curepulse -G curepulse
 
 # Copy the built fat-JAR from the build stage
-COPY --from=build /app/target/patient-service-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/discovery-server-0.0.1-SNAPSHOT.jar app.jar
 
 # Set ownership
 RUN chown curepulse:curepulse app.jar
 USER curepulse
 
-ENV PORT=8082
-EXPOSE 8082
+ENV PORT=8761
+EXPOSE 8761
 
-# Start Spring Boot with production profile
+# Start Eureka with production configuration
 ENTRYPOINT ["java", \
   "-Dspring.profiles.active=prod", \
   "-Djava.awt.headless=true", \
